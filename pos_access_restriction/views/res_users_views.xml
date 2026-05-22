@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+    User form: Point of Sale shop restriction tab
+    ==============================================
+    This view is used every time a user form is opened (Settings → Users).
+    The tab and its restrictions are immediately visible after the 'has_pos_access'
+    field is recomputed (which happens automatically when the user's POS group changes).
+-->
+    <record id="view_users_form_inherit_pos_restriction" model="ir.ui.view">
+        <field name="name">res.users.form.inherit.pos.restriction</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//sheet" position="inside">
+                <field name="has_pos_access" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//notebook" position="inside">
+
+                <page string="Point of Sale" name="pos_settings_tab" invisible="not has_pos_access">
+                    <group>
+                        <group string="Security Restrictions" groups="point_of_sale.group_pos_manager">
+
+                            <field name="allowed_pos_ids"
+                                   widget="many2many_tags"
+                                   options="{'no_create': True, 'no_edit': True}"
+                                   domain="[('company_id', 'in', company_ids)]"
+                                   placeholder="Click to assign POS centers..."/>
+
+                        </group>
+                    </group>
+                </page>
+
+            </xpath>
+
+        </field>
+    </record>
+</odoo>
