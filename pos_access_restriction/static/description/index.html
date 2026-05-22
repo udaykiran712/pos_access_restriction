@@ -5,7 +5,8 @@
                 POS User Access Restriction (Odoo 18)
             </h2>
             <h3 class="oe_slogan" style="font-size: 20px; color: #4b5563; font-weight: 400;">
-                Secure your retail operations by binding standard POS users strictly to their assigned shops.
+                Strictly bind standard POS users to their assigned shops. Ensure complete data privacy across orders,
+                payments, and reports.
             </h3>
         </div>
     </div>
@@ -13,68 +14,88 @@
     <div class="oe_row oe_padded" style="background: #f9fafb; padding: 30px; border-radius: 12px;">
         <div class="col-md-12">
             <h4 style="font-size: 24px; font-weight: 600; color: #1f2937; margin-bottom: 15px;">
-                The Problem
+                Why You Need This Module
             </h4>
             <p style="font-size: 16px; color: #4b5563; line-height: 1.6;">
                 By default, granting a user 'POS User' access in Odoo allows them to view every Point of Sale
                 configuration, access any active register session, and browse company-wide orders and payment history.
                 For business owners managing multiple locations, branches, or franchises, this is a major security flaw.
+                This module completely isolates user access down to the specific shops they are authorized to manage.
             </p>
         </div>
     </div>
 
-    <div class="oe_row oe_padded" style="margin-top: 30px;">
-        <h4 class="text-center" style="font-size: 26px; font-weight: 600; color: #1f2937; margin-bottom: 30px;">
-            Key Features
+    <div class="oe_row oe_padded" style="margin-top: 40px;">
+        <h4 class="text-center" style="font-size: 28px; font-weight: 700; color: #1f2937; margin-bottom: 40px;">
+            How It Works
         </h4>
 
-        <div class="row">
-            <div class="col-md-6" style="margin-bottom: 20px;">
-                <div style="border: 1px solid #e5e7eb; padding: 20px; border-radius: 8px; height: 100%;">
-                    <h5 style="color: #4338ca; font-weight: 600;">
-                        <i class="fa fa-sliders" style="margin-right: 8px;"></i> Granular Restrictions
-                    </h5>
-                    <p style="color: #6b7280; margin-top: 10px;">
-                        Explicitly select one or multiple POS shops a user is authorized to interact with directly from
-                        their profile.
-                    </p>
-                </div>
+        <div class="row" style="margin-bottom: 50px; display: flex; align-items: center;">
+            <div class="col-md-6">
+                <h4 style="color: #4338ca; font-weight: 600; font-size: 22px;">1. Dynamic User Configuration</h4>
+                <ul style="font-size: 16px; color: #4b5563; line-height: 1.6; padding-left: 20px;">
+                    <li style="margin-bottom: 10px;">A dedicated <b>Point of Sale</b> tab automatically appears on the
+                        User form.
+                    </li>
+                    <li style="margin-bottom: 10px;">To keep the UI clean, this tab is <i>only</i> visible when the user
+                        is explicitly granted at least 'User' or 'Administrator' rights for the POS app.
+                    </li>
+                    <li style="margin-bottom: 10px;">Administrators can select one or multiple POS centers to assign
+                        directly to the employee.
+                    </li>
+                </ul>
             </div>
-
-            <div class="col-md-6" style="margin-bottom: 20px;">
-                <div style="border: 1px solid #e5e7eb; padding: 20px; border-radius: 8px; height: 100%;">
-                    <h5 style="color: #4338ca; font-weight: 600;">
-                        <i class="fa fa-building" style="margin-right: 8px;"></i> Multi-Company Alignment
-                    </h5>
-                    <p style="color: #6b7280; margin-top: 10px;">
-                        The configuration field automatically honors allowed company parameters, completely preventing
-                        cross-company shop assignments.
-                    </p>
-                </div>
+            <div class="col-md-6 text-center">
+                <img src="config_tab.png" alt="User Configuration Tab"
+                     style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #e5e7eb;">
             </div>
+        </div>
 
-            <div class="col-md-6" style="margin-bottom: 20px;">
-                <div style="border: 1px solid #e5e7eb; padding: 20px; border-radius: 8px; height: 100%;">
-                    <h5 style="color: #4338ca; font-weight: 600;">
-                        <i class="fa fa-shield" style="margin-right: 8px;"></i> Complete Data Isolation
-                    </h5>
-                    <p style="color: #6b7280; margin-top: 10px;">
-                        Secures the dashboard, active sessions, backend order listings, and financial payment lines via
-                        underlying secure record rules.
-                    </p>
-                </div>
+        <div class="row" style="margin-bottom: 50px; display: flex; align-items: center; flex-direction: row-reverse;">
+            <div class="col-md-6">
+                <h4 style="color: #4338ca; font-weight: 600; font-size: 22px;">2. Intelligent Multi-Company
+                    Filtering</h4>
+                <ul style="font-size: 16px; color: #4b5563; line-height: 1.6; padding-left: 20px;">
+                    <li style="margin-bottom: 10px;">The assignment field intelligently respects Odoo's multi-company
+                        environment.
+                    </li>
+                    <li style="margin-bottom: 10px;">When an admin assigns a POS center, the dropdown strictly filters
+                        and only displays POS centers belonging to the <b>Allowed Companies</b> selected in the user's
+                        main environment settings.
+                    </li>
+                    <li style="margin-bottom: 10px;">This prevents accidental cross-company data leakage during
+                        configuration.
+                    </li>
+                </ul>
             </div>
+            <div class="col-md-6 text-center">
+                <img src="dashboard_isolation.png" alt="Multi Company Dashboard"
+                     style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #e5e7eb;">
+            </div>
+        </div>
 
-            <div class="col-md-6" style="margin-bottom: 20px;">
-                <div style="border: 1px solid #e5e7eb; padding: 20px; border-radius: 8px; height: 100%;">
-                    <h5 style="color: #4338ca; font-weight: 600;">
-                        <i class="fa fa-bar-chart" style="margin-right: 8px;"></i> Safe Reporting
-                    </h5>
-                    <p style="color: #6b7280; margin-top: 10px;">
-                        Automatically filters out analytical rows in complex SQL view pivots, ensuring metrics match
-                        only assigned configurations.
-                    </p>
-                </div>
+        <div class="row" style="margin-bottom: 50px; display: flex; align-items: center;">
+            <div class="col-md-6">
+                <h4 style="color: #4338ca; font-weight: 600; font-size: 22px;">3. Ironclad Record Security</h4>
+                <ul style="font-size: 16px; color: #4b5563; line-height: 1.6; padding-left: 20px;">
+                    <li style="margin-bottom: 10px;"><b>POS Dashboard:</b> Unassigned POS centers vanish from the user's
+                        dashboard view entirely.
+                    </li>
+                    <li style="margin-bottom: 10px;"><b>Order Isolation:</b> Users can only view backend POS orders
+                        processed through their specifically assigned shops.
+                    </li>
+                    <li style="margin-bottom: 10px;"><b>Payment Privacy:</b> Financial payment records are strictly
+                        filtered; users cannot see payments made at other branches.
+                    </li>
+                    <li style="margin-bottom: 10px;"><b>Secure Analytics:</b> Odoo's reporting engines dynamically
+                        adapt, ensuring sales metrics from unauthorized branches remain completely hidden from standard
+                        users.
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6 text-center">
+                <img src="order_security.png" alt="Order Security"
+                     style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #e5e7eb;">
             </div>
         </div>
     </div>
