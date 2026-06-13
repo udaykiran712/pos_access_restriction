@@ -24,7 +24,7 @@ Features:
     'data': [],
     'assets': {
         'point_of_sale._assets_pos': [
-            'pos_auto_lot_selection/static/src/js/pos_order_patch.js',
+            'pos_auto_lot_fefo_selection/static/src/js/pos_order_patch.js',
         ],
     },
     'images': [
