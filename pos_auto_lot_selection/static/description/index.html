@@ -1,0 +1,119 @@
+<section class="container" style="font-family: 'Montserrat', 'Open Sans', sans-serif; color: #333;">
+
+    <div class="row mt-4 mb-5">
+        <div class="col-12 text-center">
+            <img src="banner.png" alt="POS Auto Lot Selection Banner" class="img-fluid"
+                 style="border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); width: 100%; max-width: 900px;">
+        </div>
+    </div>
+
+    <div class="row mb-5 text-center">
+        <div class="col-12">
+            <h1 style="color: #1f2937; font-weight: 800; font-size: 2.5rem;">POS Auto Lot & Serial Selection</h1>
+            <p style="font-size: 1.2rem; color: #4b5563; max-width: 700px; margin: 0 auto; line-height: 1.6;">
+                Supercharge your retail checkout speed. This module completely eliminates manual lot selection popups by
+                automatically assigning the oldest available stock directly to your Point of Sale cart.
+            </p>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-md-4 mb-4">
+            <div class="p-4 h-100 text-center"
+                 style="background: #f0fdf4; border-radius: 12px; border: 1px solid #bbf7d0;">
+                <h3 style="color: #166534; font-weight: 700;">🚀 Lightning Fast</h3>
+                <p style="color: #15803d; font-size: 1rem;">No more UI interruptions. Cashiers can scan and sell
+                    instantly without stopping to type or select lot numbers.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="p-4 h-100 text-center"
+                 style="background: #eff6ff; border-radius: 12px; border: 1px solid #bfdbfe;">
+                <h3 style="color: #1e3a8a; font-weight: 700;">🔄 Smart FEFO/FIFO</h3>
+                <p style="color: #1d4ed8; font-size: 1rem;">Automatically queries your backend database to fetch and
+                    assign the oldest stock first, reducing inventory waste.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="p-4 h-100 text-center"
+                 style="background: #fef2f2; border-radius: 12px; border: 1px solid #fecaca;">
+                <h3 style="color: #991b1b; font-weight: 700;">🛡️ Native Fallback</h3>
+                <p style="color: #b91c1c; font-size: 1rem;">If stock runs out or discrepancies occur, the module
+                    gracefully falls back to the native Odoo popup, preventing register blocks.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5 align-items-center"
+         style="background: #ffffff; padding: 40px 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+        <div class="col-md-12 text-center mb-4">
+            <h2 style="color: #111827; font-weight: 800;">How It Works</h2>
+            <hr style="width: 60px; border-top: 4px solid #3b82f6; margin: 15px auto;">
+        </div>
+        <div class="col-md-8 mx-auto">
+            <ul style="list-style: none; padding: 0; font-size: 1.1rem; line-height: 1.8; color: #374151;">
+                <li style="margin-bottom: 15px;"><b>1. Product Selection:</b> The cashier clicks or scans a tracked
+                    product (Lot or Serial).
+                </li>
+                <li style="margin-bottom: 15px;"><b>2. Background Interception:</b> Our Owl JavaScript patch pauses the
+                    UI and silently pings the Python backend.
+                </li>
+                <li style="margin-bottom: 15px;"><b>3. Database Query:</b> The system filters <code
+                        style="background: #f3f4f6; padding: 2px 6px; border-radius: 4px;">stock.quant</code> for the
+                    active POS location, ignoring serials already in the draft cart.
+                </li>
+                <li style="margin-bottom: 15px;"><b>4. Instant Assignment:</b> The oldest valid numbers are mapped to
+                    the cart line, bypassing the modal completely.
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-12">
+            <div style="background: #fffbeb; border-left: 6px solid #f59e0b; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                <h3 style="color: #b45309; font-weight: 700; margin-top: 0;">⚠️ Important Prerequisites</h3>
+                <p style="color: #92400e; font-size: 1.1rem; margin-bottom: 15px;">
+                    For this automation to trigger flawlessly, your database must be properly normalized. <strong>This
+                    module relies strictly on assigned Lot/Serial numbers.</strong>
+                </p>
+                <ul style="color: #92400e; font-size: 1.05rem;">
+                    <li><strong>Legacy Untracked Stock:</strong> If you have old inventory sitting in your POS location
+                        that was received <em>without</em> a lot number, the automation will ignore it.
+                    </li>
+                    <li><strong>Action Required:</strong> Before going live, you must either sell out your old untracked
+                        stock manually, or perform an <strong>Inventory Adjustment</strong> in the backend to assign a
+                        dummy lot number (e.g., <code>LEGACY-BATCH</code>) to those existing quantities.
+                    </li>
+                    <li><strong>Configuration:</strong> Ensure your POS Operation Type has "Use Existing Lots/Serial
+                        Numbers" enabled.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 mb-4">
+        <div class="col-12 text-center">
+            <hr style="border-top: 1px solid #e5e7eb;">
+            <p style="color: #6b7280; font-size: 1rem; margin-top: 20px; font-weight: 500;">
+                Developed with precision
+            </p>
+            <p style="color: #9ca3af; font-size: 0.9rem; margin-bottom: 20px;">
+                Have questions or need advanced customizations? Let's connect!
+            </p>
+
+            <div class="d-flex justify-content-center gap-3 mt-2">
+                <a href="https://github.com/udaykiran712" target="_blank" class="btn btn-outline-dark"
+                   style="border-radius: 30px; font-weight: 600; padding: 10px 24px; transition: all 0.3s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-decoration: none;">
+                    🐙 View on GitHub
+                </a>
+                <a href="https://www.linkedin.com/in/udaykirangardas/" target="_blank" class="btn btn-primary"
+                   style="background-color: #0a66c2; border-color: #0a66c2; border-radius: 30px; font-weight: 600; padding: 10px 24px; color: #fff; transition: all 0.3s ease; box-shadow: 0 2px 4px rgba(10,102,194,0.2); text-decoration: none;">
+                    💼 Connect on LinkedIn
+                </a>
+            </div>
+        </div>
+    </div>
+
+</section>
