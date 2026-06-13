@@ -19,7 +19,7 @@ Features:
 * Gracefully falls back to the manual selection popup if stock is depleted or untracked.
     """,
     'author': 'Gardas Udaykiran',
-    'website': 'https://github.com/udaykiran712',
+    'website': 'https://www.linkedin.com/in/udaykirangardas/',
     'depends': ['point_of_sale', 'stock'],
     'data': [],
     'assets': {
