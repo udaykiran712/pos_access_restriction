@@ -1,663 +1,290 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POS Product Stock & Price Display - Odoo 18</title>
-    <!--
-        Part of Odoo. See LICENSE file for full copyright and licensing details.
-        ===========================================================================
-        Module: pos_product_stock_price_display
-        Author: Uday Odoo Apps
-        Website: https://www.linkedin.com/in/udaykirangardas/
-        License: LGPL-3 (https://www.gnu.org/licenses/lgpl-3.0.html)
-        File: static/description/index.html
+<div class="container py-4"
+     style="font-family: 'Montserrat', 'Segoe UI', Roboto, sans-serif; color: #2d3748; max-width: 1140px;">
 
-        Odoo Apps Store landing page. Self-contained (inline CSS only, no
-        external stylesheet dependency), Bootstrap-5-compatible spacing/grid
-        conventions, safe for the Apps Store's sandboxed iframe rendering.
-        ===========================================================================
-    -->
-    <style>
-        :root {
-            --brand-primary: #2563eb;
-            --brand-primary-dark: #1e3a8a;
-            --brand-accent: #7c3aed;
-            --stock-in: #16a34a;
-            --stock-low: #ea580c;
-            --stock-out: #dc2626;
-            --ink: #0f172a;
-            --muted: #475569;
-            --surface: #ffffff;
-            --surface-alt: #f8fafc;
-            --border: #e2e8f0;
-        }
+    <div class="row text-center mb-4">
+        <div class="col-12">
+            <div class="p-4 p-md-5 rounded-4 shadow-sm"
+                 style="background: linear-gradient(135deg, #714B67 0%, #46283d 100%); color: #ffffff;">
+                <span class="badge px-3 py-2 rounded-pill text-uppercase mb-3"
+                      style="background: rgba(255, 255, 255, 0.2); font-size: 0.85rem; letter-spacing: 1px;">
+                    ✨ Odoo 18 Community & Enterprise
+                </span>
+                <h1 class="fw-bold display-5 mb-3" style="color: #ffffff;">
+                    POS Product Stock &amp; Price Display
+                </h1>
+                <h4 class="fw-light mb-4" style="color: #e2d9e0; max-width: 850px; margin: 0 auto; line-height: 1.6;">
+                    Live dynamic pricing, location-scoped stock on hand, and strict out-of-stock sale blocker directly
+                    on POS product cards.
+                </h4>
 
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            color: var(--ink);
-            background: var(--surface);
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* ---------------------------------------------------------------- */
-        /* Hero                                                              */
-        /* ---------------------------------------------------------------- */
-        .hero {
-            background: linear-gradient(135deg, var(--brand-primary-dark) 0%, var(--brand-primary) 55%, var(--brand-accent) 100%);
-            color: #ffffff;
-            padding: 72px 0 64px;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 2.6rem;
-            font-weight: 800;
-            margin: 0 0 14px;
-            letter-spacing: -0.02em;
-        }
-
-        .hero p.lead {
-            font-size: 1.15rem;
-            max-width: 680px;
-            margin: 0 auto 28px;
-            color: rgba(255, 255, 255, 0.92);
-        }
-
-        .badge-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-            margin-bottom: 8px;
-        }
-
-        .pill-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(255, 255, 255, 0.16);
-            border: 1px solid rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(6px);
-            color: #ffffff;
-            font-size: 0.82rem;
-            font-weight: 600;
-            padding: 6px 14px;
-            border-radius: 999px;
-        }
-
-        /* ---------------------------------------------------------------- */
-        /* Sections                                                          */
-        /* ---------------------------------------------------------------- */
-        section {
-            padding: 56px 0;
-        }
-
-        section.alt-bg {
-            background: var(--surface-alt);
-        }
-
-        h2.section-title {
-            font-size: 1.9rem;
-            font-weight: 800;
-            text-align: center;
-            margin: 0 0 8px;
-            letter-spacing: -0.01em;
-        }
-
-        p.section-subtitle {
-            text-align: center;
-            color: var(--muted);
-            max-width: 620px;
-            margin: 0 auto 40px;
-            font-size: 1.02rem;
-        }
-
-        /* ---------------------------------------------------------------- */
-        /* Benefit / Feature cards                                           */
-        /* ---------------------------------------------------------------- */
-        .grid {
-            display: grid;
-            gap: 24px;
-        }
-
-        .grid-3 {
-            grid-template-columns: repeat(3, 1fr);
-        }
-
-        .grid-1 {
-            grid-template-columns: 1fr;
-        }
-
-        @media (max-width: 900px) {
-            .grid-3 {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 28px;
-            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 8px 24px rgba(15, 23, 42, 0.04);
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08), 0 16px 32px rgba(15, 23, 42, 0.08);
-        }
-
-        .card .icon-circle {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
-            color: #fff;
-        }
-
-        .card h3 {
-            font-size: 1.12rem;
-            margin: 0 0 10px;
-            font-weight: 700;
-        }
-
-        .card p {
-            color: var(--muted);
-            margin: 0;
-            font-size: 0.95rem;
-        }
-
-        /* ---------------------------------------------------------------- */
-        /* Feature breakdown (detailed)                                      */
-        /* ---------------------------------------------------------------- */
-        .feature-block {
-            display: flex;
-            gap: 28px;
-            align-items: flex-start;
-            padding: 28px 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .feature-block:last-child {
-            border-bottom: none;
-        }
-
-        @media (max-width: 760px) {
-            .feature-block {
-                flex-direction: column;
-            }
-        }
-
-        .feature-number {
-            flex: 0 0 auto;
-            width: 56px;
-            height: 56px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
-            color: #fff;
-            font-weight: 800;
-            font-size: 1.3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .feature-body h3 {
-            margin: 0 0 8px;
-            font-size: 1.25rem;
-            font-weight: 700;
-        }
-
-        .feature-body p {
-            color: var(--muted);
-            margin: 0 0 12px;
-        }
-
-        .status-dot {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 999px;
-            margin-right: 8px;
-            margin-bottom: 6px;
-        }
-
-        .status-dot .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-
-        .status-in {
-            background: rgba(22, 163, 74, 0.1);
-            color: var(--stock-in);
-        }
-
-        .status-in .dot {
-            background: var(--stock-in);
-        }
-
-        .status-low {
-            background: rgba(234, 88, 12, 0.1);
-            color: var(--stock-low);
-        }
-
-        .status-low .dot {
-            background: var(--stock-low);
-        }
-
-        .status-out {
-            background: rgba(220, 38, 38, 0.1);
-            color: var(--stock-out);
-        }
-
-        .status-out .dot {
-            background: var(--stock-out);
-        }
-
-        /* ---------------------------------------------------------------- */
-        /* Workflow / steps                                                  */
-        /* ---------------------------------------------------------------- */
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 18px;
-            counter-reset: step;
-        }
-
-        @media (max-width: 900px) {
-            .steps {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        @media (max-width: 560px) {
-            .steps {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .step {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 22px 18px;
-            text-align: center;
-            position: relative;
-        }
-
-        .step .step-num {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: var(--brand-primary-dark);
-            color: #fff;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 12px;
-            font-size: 0.95rem;
-        }
-
-        .step h4 {
-            margin: 0 0 6px;
-            font-size: 0.98rem;
-            font-weight: 700;
-        }
-
-        .step p {
-            margin: 0;
-            font-size: 0.85rem;
-            color: var(--muted);
-        }
-
-        /* ---------------------------------------------------------------- */
-        /* Technical architecture                                            */
-        /* ---------------------------------------------------------------- */
-        .tech-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 18px;
-        }
-
-        @media (max-width: 760px) {
-            .tech-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .tech-item {
-            display: flex;
-            gap: 14px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 20px;
-        }
-
-        .tech-item .tech-mark {
-            flex: 0 0 auto;
-            font-family: "SFMono-Regular", Consolas, monospace;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--brand-primary);
-            background: rgba(37, 99, 235, 0.08);
-            border-radius: 8px;
-            padding: 6px 10px;
-            height: fit-content;
-        }
-
-        .tech-item h4 {
-            margin: 0 0 4px;
-            font-size: 0.98rem;
-        }
-
-        .tech-item p {
-            margin: 0;
-            font-size: 0.88rem;
-            color: var(--muted);
-        }
-
-        /* ---------------------------------------------------------------- */
-        /* Footer                                                            */
-        /* ---------------------------------------------------------------- */
-        footer {
-            background: var(--brand-primary-dark);
-            color: rgba(255, 255, 255, 0.9);
-            padding: 40px 0;
-            text-align: center;
-        }
-
-        footer h3 {
-            margin: 0 0 6px;
-            color: #fff;
-            font-size: 1.15rem;
-        }
-
-        footer p {
-            margin: 4px 0;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.75);
-        }
-
-        footer a {
-            color: #ffffff;
-            font-weight: 600;
-            text-decoration: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-        }
-
-        footer a:hover {
-            border-bottom-color: #fff;
-        }
-
-        footer .license-tag {
-            display: inline-block;
-            margin-top: 14px;
-            font-size: 0.78rem;
-            padding: 4px 12px;
-            border-radius: 999px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-    </style>
-</head>
-<body>
-
-<!-- ==================================================================== -->
-<!-- HERO                                                                   -->
-<!-- ==================================================================== -->
-<section class="hero">
-    <div class="container">
-        <div class="badge-row">
-            <span class="pill-badge">✅ Odoo 18 Community & Enterprise</span>
-            <span class="pill-badge">🧾 Point of Sale</span>
-            <span class="pill-badge">📦 Inventory Integrated</span>
-        </div>
-        <h1>POS Product Stock &amp; Price Display</h1>
-        <p class="lead">
-            Give every cashier live, location-accurate pricing and stock visibility
-            right on the product tile - and make it physically impossible to sell
-            what isn't on the shelf.
-        </p>
-        <div class="badge-row">
-            <span class="pill-badge">⚡ Zero N+1 Queries</span>
-            <span class="pill-badge">🎯 Native OWL 2</span>
-            <span class="pill-badge">🔒 LGPL-3</span>
-        </div>
-    </div>
-</section>
-
-<!-- ==================================================================== -->
-<!-- KEY BUSINESS BENEFITS                                                 -->
-<!-- ==================================================================== -->
-<section>
-    <div class="container">
-        <h2 class="section-title">Why This Module Pays for Itself</h2>
-        <p class="section-subtitle">
-            Three tightly-integrated features that remove guesswork at checkout and
-            protect your inventory from overselling.
-        </p>
-        <div class="grid grid-3">
-            <div class="card">
-                <div class="icon-circle">⏱️</div>
-                <h3>Faster Checkout</h3>
-                <p>Cashiers see the exact sales price on every tile instantly - no
-                    tapping into a product to confirm pricing, no register slowdowns
-                    during rush hours.</p>
-            </div>
-            <div class="card">
-                <div class="icon-circle">📉</div>
-                <h3>Zero Negative Inventory</h3>
-                <p>Stock is validated against the exact POS source location before
-                    a line is ever created, eliminating the negative-stock cleanup
-                    that eats into your inventory team's week.</p>
-            </div>
-            <div class="card">
-                <div class="icon-circle">🛡️</div>
-                <h3>Error Prevention at the Source</h3>
-                <p>A single, native blocking dialog - triggered from tile taps,
-                    barcode scans, and search alike - stops out-of-stock sales
-                    before they happen, not after a reconciliation report.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ==================================================================== -->
-<!-- DETAILED FEATURE BREAKDOWN                                            -->
-<!-- ==================================================================== -->
-<section class="alt-bg">
-    <div class="container">
-        <h2 class="section-title">Three Features. One Seamless Register Experience.</h2>
-        <p class="section-subtitle">
-            Every feature is built as a non-destructive extension of core Odoo 18
-            POS components - no core files touched, no upgrade risk.
-        </p>
-
-        <div class="feature-block">
-            <div class="feature-number">1</div>
-            <div class="feature-body">
-                <h3>Live Price on Product Tile</h3>
-                <p>
-                    A sleek, translucent price pill renders in the top-left corner of
-                    every Product Card, computed live through the POS store so it
-                    always reflects the active pricelist, applicable taxes
-                    (included or excluded per your POS configuration), and the
-                    session's currency formatting - identical to what the customer
-                    is actually charged at payment.
-                </p>
-                <p>
-                    Built with non-destructive OWL 2 template inheritance
-                    (<code>t-inherit-mode="extension"</code>) and a lightweight
-                    component patch, so it stacks cleanly with any other module
-                    extending the same card.
-                </p>
-            </div>
-        </div>
-
-        <div class="feature-block">
-            <div class="feature-number">2</div>
-            <div class="feature-body">
-                <h3>Accurate Physical Location Stock</h3>
-                <p>
-                    A second badge shows real, on-shelf quantity at the exact source
-                    stock location configured on your POS's operation type - not a
-                    generic, company-wide total, and not a figure distorted by
-                    virtual or inventory-adjustment locations.
-                </p>
-                <p>
-                    <span class="status-dot status-in"><span class="dot"></span>In Stock &gt; 5</span>
-                    <span class="status-dot status-low"><span class="dot"></span>Low Stock 1-5</span>
-                    <span class="status-dot status-out"><span class="dot"></span>Out of Stock &le; 0</span>
-                </p>
-                <p>
-                    Consumables and services are automatically excluded - only
-                    genuinely stock-tracked products display a badge.
-                </p>
-            </div>
-        </div>
-
-        <div class="feature-block">
-            <div class="feature-number">3</div>
-            <div class="feature-body">
-                <h3>Strict Zero &amp; Insufficient Stock Sale Blocker</h3>
-                <p>
-                    Every path a product can enter the cart - tapping a tile,
-                    scanning a barcode, or selecting from search - funnels through a
-                    single guarded entry point. If stock is exhausted or the
-                    requested quantity would exceed what's on the shelf, a native
-                    confirmation dialog stops the line from being created, with a
-                    clear message stating exactly how many units remain.
-                </p>
-                <p>
-                    Refunds and returns are always exempt, so processing a customer
-                    return on a zero-stock product is never blocked.
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ==================================================================== -->
-<!-- HOW IT WORKS / WORKFLOW                                               -->
-<!-- ==================================================================== -->
-<section>
-    <div class="container">
-        <h2 class="section-title">The Cashier Journey</h2>
-        <p class="section-subtitle">From tile to receipt, every step is protected and informed.</p>
-        <div class="steps">
-            <div class="step">
-                <div class="step-num">1</div>
-                <h4>Open the Register</h4>
-                <p>Every product tile already shows its live price and current
-                    stock badge - no extra clicks.</p>
-            </div>
-            <div class="step">
-                <div class="step-num">2</div>
-                <h4>Add to Cart</h4>
-                <p>Tap a tile, scan a barcode, or search - stock is checked
-                    instantly against the POS location.</p>
-            </div>
-            <div class="step">
-                <div class="step-num">3</div>
-                <h4>Blocked if Needed</h4>
-                <p>If stock is insufficient or exhausted, a clear dialog explains
-                    exactly why - before the line is created.</p>
-            </div>
-            <div class="step">
-                <div class="step-num">4</div>
-                <h4>Checkout with Confidence</h4>
-                <p>Every completed sale reflects real, available inventory - no
-                    surprises during reconciliation.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ==================================================================== -->
-<!-- TECHNICAL ARCHITECTURE                                                -->
-<!-- ==================================================================== -->
-<section class="alt-bg">
-    <div class="container">
-        <h2 class="section-title">Built for Performance at Scale</h2>
-        <p class="section-subtitle">
-            Designed and diagnosed against a live Odoo 18 database - not just unit
-            tests.
-        </p>
-        <div class="tech-grid">
-            <div class="tech-item">
-                <div class="tech-mark">O(1)</div>
-                <div>
-                    <h4>Single Batched Read per POS Load</h4>
-                    <p>Stock is resolved via one <code>stock.quant._read_group</code>
-                        call for the entire loaded product catalog - not a per-product
-                        loop.</p>
+                <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
+                    <span class="badge bg-light text-dark px-3 py-2 rounded-pill fw-semibold">✔ Odoo 18.0 Ready</span>
+                    <span class="badge bg-light text-dark px-3 py-2 rounded-pill fw-semibold">✔ Point of Sale &amp; Inventory</span>
+                    <span class="badge bg-light text-dark px-3 py-2 rounded-pill fw-semibold">✔ Zero Configuration</span>
+                    <span class="badge bg-light text-dark px-3 py-2 rounded-pill fw-semibold">✔ High Performance O(1)</span>
                 </div>
-            </div>
-            <div class="tech-item">
-                <div class="tech-mark">0 N+1</div>
-                <div>
-                    <h4>Zero N+1 Query Pattern</h4>
-                    <p>Both price and stock computation are architected to scale
-                        flatly regardless of catalog size.</p>
-                </div>
-            </div>
-            <div class="tech-item">
-                <div class="tech-mark">OWL 2</div>
-                <div>
-                    <h4>Native Component Extension</h4>
-                    <p>Uses <code>patch()</code> and <code>t-inherit-mode="extension"</code>
-                        exclusively - no core template overrides, no monkey-patched
-                        core files.</p>
-                </div>
-            </div>
-            <div class="tech-item">
-                <div class="tech-mark">Internal</div>
-                <div>
-                    <h4>Physical-Location-Only Accuracy</h4>
-                    <p>Stock queries are scoped to <code>location_id.usage = 'internal'</code>,
-                        so virtual and inventory-adjustment locations never distort the
-                        figure shown at the register.</p>
+
+                <div class="d-flex flex-wrap justify-content-center gap-3 mt-3">
+                    <a href="https://apps.odoo.com/apps/browse?repo_maintainer_id=1184648" target="_blank"
+                       class="btn px-4 py-2 fw-bold text-white shadow-sm"
+                       style="background: #00A09D; border-radius: 8px; text-decoration: none;">
+                        🛍️ View All My Odoo Apps
+                    </a>
+                    <a href="https://github.com/udaykiran712/uday_odoo_apps" target="_blank"
+                       class="btn px-4 py-2 fw-bold shadow-sm"
+                       style="background: #ffffff; color: #714B67; border-radius: 8px; text-decoration: none;">
+                        📦 Download Repo ZIP (GitHub)
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-</section>
 
-<!-- ==================================================================== -->
-<!-- FOOTER                                                                -->
-<!-- ==================================================================== -->
-<footer>
-    <div class="container">
-        <h3>POS Product Stock &amp; Price Display</h3>
-        <p>Developed and maintained by <strong>Uday Kiran Gardas</strong> (Uday Odoo Apps)</p>
-        <p><a href="https://www.linkedin.com/in/udaykirangardas/" target="_blank" rel="noopener">linkedin.com/in/udaykirangardas</a>
-        </p>
-        <span class="license-tag">Licensed under LGPL-3</span>
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <div class="p-2 bg-white rounded-4 shadow-sm border">
+                <img src="banner.png" alt="POS Product Stock and Price Display Banner" class="img-fluid rounded-3"
+                     style="width: 100%; height: auto; max-height: 520px; object-fit: cover;">
+            </div>
+        </div>
     </div>
-</footer>
 
-</body>
-</html>
+    <div class="row mb-5">
+        <div class="col-12 text-center mb-4">
+            <h2 class="fw-bold" style="color: #714B67;">Why Do You Need This Module?</h2>
+            <p class="text-muted">Standard Odoo POS creates unnecessary bottlenecks at checkout. Here is how we fix
+                it.</p>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="p-4 h-100 rounded-3 shadow-sm"
+                 style="background-color: #fff5f5; border-left: 5px solid #e53e3e;">
+                <h5 class="fw-bold text-danger mb-3">❌ Standard Odoo POS Limitations</h5>
+                <ul class="list-unstyled mb-0" style="line-height: 2;">
+                    <li>• Cashiers must open the <strong>(i) info popup</strong> for every product just to check stock.
+                    </li>
+                    <li>• Negative stock is allowed by default, causing inventory discrepancies.</li>
+                    <li>• Cashiers cannot see the active unit price on the product grid.</li>
+                    <li>• Slows down long checkout queues and frustrates retail shoppers.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="p-4 h-100 rounded-3 shadow-sm"
+                 style="background-color: #f0fdf4; border-left: 5px solid #22c55e;">
+                <h5 class="fw-bold text-success mb-3">✅ With This Extension</h5>
+                <ul class="list-unstyled mb-0" style="line-height: 2;">
+                    <li>• <strong>Instant Price Tag:</strong> View the live selling price directly on the card tile.
+                    </li>
+                    <li>• <strong>Color-Coded Stock:</strong> Instantly spot stock levels (Green / Orange / Red).</li>
+                    <li>• <strong>Strict Sale Blocker:</strong> Prevents adding zero or insufficient stock items to
+                        cart.
+                    </li>
+                    <li>• <strong>Location Scoped:</strong> Strictly computes physical on-hand stock for the POS
+                        warehouse location.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-center mb-4">
+        <div class="col-12">
+            <h2 class="fw-bold" style="color: #714B67;">Three Powerhouse Features</h2>
+            <p class="text-muted">Designed for peak retail speed, inventory accuracy, and zero cashier errors.</p>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm rounded-4 p-4 text-center"
+                 style="background: #ffffff; border-top: 4px solid #714B67 !important;">
+                <div class="mb-3" style="font-size: 2.5rem;">🏷️</div>
+                <h4 class="fw-bold mb-3">1. Real-Time Price Tag</h4>
+                <p class="text-muted" style="line-height: 1.7;">
+                    Displays a high-contrast top-left price pill on every product card. Fully responsive to active
+                    customer pricelists, tax inclusion/exclusion, and currency formatting.
+                </p>
+                <div class="mt-auto">
+                    <span class="badge px-3 py-2 rounded-pill" style="background-color: #2d3748; color: #ffffff;">Always Up-to-Date</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm rounded-4 p-4 text-center"
+                 style="background: #ffffff; border-top: 4px solid #22c55e !important;">
+                <div class="mb-3" style="font-size: 2.5rem;">📊</div>
+                <h4 class="fw-bold mb-3">2. Physical Stock Badge</h4>
+                <p class="text-muted" style="line-height: 1.7;">
+                    Displays a bottom-right badge showing live physical stock in the active POS source location with
+                    dynamic color coding:
+                </p>
+                <div class="d-flex flex-column gap-2 mb-3 text-start small">
+                    <span class="p-2 rounded" style="background: #dcfce7; color: #166534; font-weight: 600;">🟢 Green: In Stock (&gt; 5 Units)</span>
+                    <span class="p-2 rounded" style="background: #ffedd5; color: #9a3412; font-weight: 600;">🟠 Orange: Low Stock (1 – 5 Units)</span>
+                    <span class="p-2 rounded" style="background: #fee2e2; color: #991b1b; font-weight: 600;">🔴 Red: Out of Stock (≤ 0 Units)</span>
+                </div>
+                <div class="mt-auto">
+                    <span class="badge bg-success px-3 py-2 rounded-pill">Physical Internal Stock</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm rounded-4 p-4 text-center"
+                 style="background: #ffffff; border-top: 4px solid #ef4444 !important;">
+                <div class="mb-3" style="font-size: 2.5rem;">🛡️</div>
+                <h4 class="fw-bold mb-3">3. Strict Sale Blocker</h4>
+                <p class="text-muted" style="line-height: 1.7;">
+                    Guards against selling unavailable stock. If a product has 0 units or the cashier attempts to exceed
+                    available stock in cart, an automated native modal warning halts the addition.
+                </p>
+                <div class="mt-auto">
+                    <span class="badge bg-danger px-3 py-2 rounded-pill">Zero Negative Inventory</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-12 text-center mb-4">
+            <h2 class="fw-bold" style="color: #714B67;">User Interface &amp; Live Validation</h2>
+            <p class="text-muted">See how the module enriches the cashier experience inside Odoo 18 Point of Sale.</p>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card border-0 shadow-sm rounded-3 overflow-hidden h-100">
+                <div class="card-header bg-dark text-white fw-bold py-3">
+                    🖥️ POS Product Card with Price &amp; Stock Indicators
+                </div>
+                <div class="card-body p-3 text-center bg-light">
+                    <p class="text-muted small mb-2">Price badge displayed at top-left, location stock badge with
+                        dynamic color status at bottom-right.</p>
+                    <div class="p-3 bg-white border rounded shadow-sm">
+                        <span class="badge px-3 py-2 rounded-pill fw-bold" style="background: #22c55e; color: #fff;">🟢 80 Units In Stock</span>
+                        <span class="badge px-3 py-2 rounded-pill fw-bold ms-2"
+                              style="background: #1f2937; color: #fff;">💲 $45.00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card border-0 shadow-sm rounded-3 overflow-hidden h-100">
+                <div class="card-header bg-danger text-white fw-bold py-3">
+                    🚫 Strict Out-of-Stock Blocker Alert Modal
+                </div>
+                <div class="card-body p-3 text-center bg-light">
+                    <p class="text-muted small mb-2">Blocks product card tap, barcode scan, and manual search entry with
+                        an explicit native alert.</p>
+                    <div class="p-3 bg-white border rounded shadow-sm border-danger">
+                        <span class="text-danger fw-bold">⚠️ Out of Stock: Product [FURN_001] has 0 units available in WH/Stock.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="p-4 p-md-5 rounded-4 shadow-sm" style="background-color: #1e1e2f; color: #ffffff;">
+                <div class="text-center mb-4">
+                    <span class="badge px-3 py-2 rounded-pill text-uppercase mb-2"
+                          style="background: rgba(124, 58, 237, 0.4); color: #c4b5fd;">
+                        Under The Hood
+                    </span>
+                    <h2 class="fw-bold text-white">Enterprise-Grade Performance Architecture</h2>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="p-3 rounded-3"
+                             style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
+                            <h5 class="fw-bold" style="color: #a78bfa;">⚡ O(1) Batched Quant Query</h5>
+                            <p class="text-white-50 mb-0 small">
+                                Stock is resolved using a single SQL <code>_read_group</code> on
+                                <code>stock.quant</code> across all loaded products. Zero per-product loops, flat
+                                performance scaling.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="p-3 rounded-3"
+                             style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
+                            <h5 class="fw-bold" style="color: #a78bfa;">🛡️ Internal Location Scoping</h5>
+                            <p class="text-white-50 mb-0 small">
+                                Scoped strictly to <code>location_id.usage = 'internal'</code>. Virtual inventory
+                                adjustment quants never distort or zero-out physical shelf counts.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="p-3 rounded-3"
+                             style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
+                            <h5 class="fw-bold" style="color: #a78bfa;">🧩 Pure OWL 2 Component Extension</h5>
+                            <p class="text-white-50 mb-0 small">
+                                Built with native OWL 2 <code>patch()</code> and XML extension inheritance. No core
+                                files overwritten; 100% upgrade-safe.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="p-3 rounded-3"
+                             style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
+                            <h5 class="fw-bold" style="color: #a78bfa;">🔄 Multi-Channel Protection</h5>
+                            <p class="text-white-50 mb-0 small">
+                                Centralized blocker intercepts card clicks, barcode scanner inputs, and search additions
+                                while safely allowing return/refund orders.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="p-4 p-md-5 rounded-4 shadow-sm border text-center" style="background: #ffffff;">
+                <h3 class="fw-bold mb-2" style="color: #714B67;">Developed &amp; Maintained by Uday Kiran Gardas</h3>
+                <p class="text-muted mb-4">Dedicated to building clean, high-performance open-source &amp; enterprise
+                    extensions for Odoo.</p>
+
+                <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
+                    <a href="https://github.com/udaykiran712" target="_blank"
+                       class="btn btn-dark px-4 py-2 fw-semibold rounded-pill shadow-sm" style="text-decoration: none;">
+                        🐙 GitHub Profile: @udaykiran712
+                    </a>
+                    <a href="https://www.linkedin.com/in/udaykirangardas/" target="_blank"
+                       class="btn btn-primary px-4 py-2 fw-semibold rounded-pill shadow-sm"
+                       style="background-color: #0a66c2; border-color: #0a66c2; text-decoration: none;">
+                        💼 LinkedIn Profile
+                    </a>
+                    <a href="https://github.com/udaykiran712/uday_odoo_apps" target="_blank"
+                       class="btn btn-outline-secondary px-4 py-2 fw-semibold rounded-pill shadow-sm"
+                       style="text-decoration: none;">
+                        📂 GitHub Repository
+                    </a>
+                    <a href="https://apps.odoo.com/apps/browse?repo_maintainer_id=1184648" target="_blank"
+                       class="btn px-4 py-2 fw-semibold rounded-pill text-white shadow-sm"
+                       style="background: #714B67; text-decoration: none;">
+                        🌟 All Author Modules on Odoo Store
+                    </a>
+                </div>
+
+                <hr class="my-4" style="opacity: 0.15;">
+
+                <div class="text-muted small">
+                    <p class="mb-1"><strong>Module License:</strong> GNU Lesser General Public License v3.0 (LGPL-3)</p>
+                    <p class="mb-0">Compatible with <strong>Odoo 18.0 Community &amp; Enterprise Editions</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

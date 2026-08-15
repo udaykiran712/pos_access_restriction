@@ -16,7 +16,7 @@ This module enhances the standard Odoo 18 Point of Sale product grid by
 enriching each Product Card with additional, at-a-glance information that
 cashiers need while ringing up a sale.
     """,
-    'author': 'Uday Kiran',
+    'author': 'Gardas Uday Kiran',
     'website': 'https://www.linkedin.com/in/udaykirangardas/',
     'license': 'LGPL-3',
     'depends': [
@@ -32,7 +32,7 @@ cashiers need while ringing up a sale.
             'pos_product_stock_price_display/static/src/app/store/pos_store.js',
         ],
     },
-    'images': [],
+    'images': ['static/description/banner.png'],
     'installable': True,
     'application': False,
     'auto_install': False,
