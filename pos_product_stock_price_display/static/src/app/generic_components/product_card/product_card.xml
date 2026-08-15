@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Part of Odoo. See LICENSE file for full copyright and licensing details
+
+    File: static/src/app/generic_components/product_card/product_card.xml
+
+    Purpose
+    Non-destructively extends the core `point_of_sale.ProductCard` OWL 2
+    template to inject two informational badges inside the card's root
+    <article> element:
+
+        1. `.pos-product-price-badge`  (Feature 1) - dynamic sales price.
+        2. `.pos-product-stock-badge`  (Feature 2) - real-time,
+           location-specific stock on hand, storable products only.
+
+    Both badges are added as flat, sibling <span> elements directly
+    inside <article> (Approach A), matching the module's established,
+    tested markup pattern. This template uses `t-inherit-mode="extension"`,
+    which means it does NOT replace the original template: it patches it
+    in place, keeping the module fully compatible with Odoo's native
+    Point of Sale views and any other third-party module that also
+    extends ProductCard.
+-->
+<templates xml:space="preserve">
+
+    <t t-name="pos_product_stock_price_display.ProductCard"
+       t-inherit="point_of_sale.ProductCard"
+       t-inherit-mode="extension"
+       owl="1">
+
+        <!--
+            Target the root <article> element of the native ProductCard
+            template and append our badges as flat sibling elements, so
+            they render on top of the existing card content without
+            disturbing the product image, name, or any other native
+            markup.
+        -->
+        <xpath expr="//article" position="inside">
+            <span class="pos-product-price-badge"
+                  t-if="formattedPrice"
+                  t-esc="formattedPrice"
+                  title="Sales Price"/>
+            <span class="pos-product-stock-badge"
+                  t-if="isStorable and formattedStockQty"
+                  t-att-class="stockStatusClass"
+                  t-esc="formattedStockQty"
+                  title="Location Stock on Hand"/>
+        </xpath>
+
+    </t>
+
+</templates>

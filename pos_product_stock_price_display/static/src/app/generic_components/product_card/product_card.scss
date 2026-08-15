@@ -1,0 +1,122 @@
+// -*- coding: utf-8 -*-
+// Part of Odoo. See LICENSE file for full copyright and licensing details.
+//
+//  File: static/src/app/generic_components/product_card/product_card.scss
+//
+//  Purpose
+//  -------
+//  Styling for the two informational badges injected onto the Point of
+//  Sale ProductCard by product_card.xml / product_card.js:
+//
+//    1. `.pos-product-price-badge` (Feature 1) - dynamic sales price.
+//    2. `.pos-product-stock-badge` (Feature 2) - real-time,
+//       location-specific stock on hand.
+//
+//  Design goals:
+//    - Modern "pill" badges with a dark, translucent background so they
+//      stay legible over any product image.
+//    - High-contrast, clean typographic hierarchy (bold, compact text,
+//      tight letter-spacing).
+//    - Stock badge sits directly beneath the price badge, both anchored
+//      to the top-left corner of the card, scaling with the card rather
+//      than the viewport.
+//    - CRITICAL: `pointer-events: none` on both badges ensures they are
+//      purely decorative/informational and never intercept the click
+//      used to add the product to the current order.
+// =============================================================================
+
+.pos-product-price-badge {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    z-index: 2;
+
+    background-color: rgba(17, 24, 39, 0.72);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+
+    padding: 2px 8px;
+
+    // CRITICAL UX REQUIREMENT:
+    // The badge must never swallow or block the underlying product card
+    // click event (used to add the product to the current order).
+    pointer-events: none;
+    user-select: none;
+    transition: opacity 0.15s ease-in-out;
+
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-variant-numeric: tabular-nums;
+
+    @media (min-width: 1200px) {
+        top: 8px;
+        left: 8px;
+        padding: 3px 10px;
+        font-size: 0.8125rem;
+    }
+}
+
+// -----------------------------------------------------------------------
+// Anchored directly beneath the price badge, sharing its pill geometry
+// and typographic scale, but color-coded by stock status instead of
+// using a single neutral background.
+// -----------------------------------------------------------------------
+/* POS Product Stock Quantity Badge - Bottom Right of Image Area */
+.pos-product-stock-badge {
+    position: absolute;
+    bottom: 45px; /* Sits cleanly above the product name / content */
+    right: 6px;   /* Anchors to the right edge */
+    z-index: 2;
+
+    border-radius: 999px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+    padding: 2px 8px;
+
+    pointer-events: none;
+    user-select: none;
+    transition: opacity 0.15s ease-in-out, background-color 0.15s ease-in-out;
+
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-variant-numeric: tabular-nums;
+
+    // Fallback background
+    background-color: rgba(55, 65, 81, 0.88);
+
+    // 🟢 In Stock (qty > 5)
+    &.pos-stock-in {
+        background-color: rgba(22, 101, 52, 0.88);
+    }
+
+    // 🟠 Low Stock (0 < qty <= 5)
+    &.pos-stock-low {
+        background-color: rgba(194, 65, 12, 0.88);
+    }
+
+    // 🔴 Out of Stock (qty <= 0)
+    &.pos-stock-out {
+        background-color: rgba(185, 28, 28, 0.88);
+    }
+
+    @media (min-width: 1200px) {
+        bottom: 50px;
+        right: 8px;
+        padding: 3px 10px;
+        font-size: 0.8125rem;
+    }
+}
