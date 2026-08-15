@@ -32,7 +32,12 @@ cashiers need while ringing up a sale.
             'pos_product_stock_price_display/static/src/app/store/pos_store.js',
         ],
     },
-    'images': ['static/description/banner.png'],
+    'images': [
+        'static/description/banner.png',
+        'static/description/pos_screen.png',
+        'static/description/error_popup.png',
+        'static/description/insuficient_stock.png',
+    ],
     'installable': True,
     'application': False,
     'auto_install': False,
